@@ -1,0 +1,156 @@
+/* Global Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Chart Containers */
+.chart-container {
+    height: 350px;
+    width: 100%;
+}
+
+/* Insights Container */
+.insights-container {
+    height: 350px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.insights-container h6 {
+    margin-top: 15px;
+    font-weight: 600;
+}
+
+.insights-container ul {
+    padding-left: 20px;
+}
+
+/* Strategies Container */
+.strategies-container {
+    height: 350px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.strategy-card {
+    margin-bottom: 15px;
+    border-left: 4px solid #28a745;
+    padding-left: 15px;
+}
+
+.strategy-card h6 {
+    font-weight: 600;
+}
+
+.strategy-card ul {
+    padding-left: 20px;
+}
+
+/* Prediction Container */
+.prediction-container {
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.prediction-result {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    text-align: center;
+    width: 100%;
+}
+
+.prediction-value {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #28a745;
+}
+
+.prediction-unit {
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Buttons */
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+/* Navigation */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 700;
+}
+
+/* Footer */
+footer {
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+footer a {
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .chart-container {
+        height: 300px;
+    }
+    
+    .insights-container, .strategies-container {
+        height: 300px;
+    }
+}
+
+/* Loading spinner */
+.loading-spinner {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: #28a745;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+} 

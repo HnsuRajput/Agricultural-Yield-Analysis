@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Agricultural Yield Analysis</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-seedling me-2"></i> Himanshu Rajput, Indian Agricultural Yield Analysis 
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#regional-analysis">Regional Analysis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#crop-analysis">Crop Analysis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#yield-prediction">Yield Prediction</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#improvement-strategies">Improvement Strategies</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-light py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold">Himanshu Rajput - Agricultural Yield Analysis</h1>
+                    <p class="lead">Analyze crop yield variability across Indian agro-climatic zones and identify key factors influencing yield.</p>
+                    <p>This interactive dashboard provides data-driven insights into regional agricultural patterns, helping farmers and policymakers make informed decisions.</p>
+                </div>
+                <div class="col-lg-4">
+                    <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Agriculture" class="img-fluid rounded">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-5">
+        <!-- Regional Analysis Section -->
+        <section id="regional-analysis" class="mb-5">
+            <div class="container">
+                <h2 class="mb-4">Regional Analysis</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Select Region</h5>
+                                <select id="region-select" class="form-select mb-3">
+                                    <option value="">Loading regions...</option>
+                                </select>
+                                <h5 class="card-title">Select Crop (Optional)</h5>
+                                <select id="region-crop-select" class="form-select mb-3">
+                                    <option value="">All Crops</option>
+                                </select>
+                                <button id="analyze-region-btn" class="btn btn-success w-100">Analyze Region</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Regional Yield Trend</h5>
+                                <div id="region-yield-trend" class="chart-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Factor Impact Analysis</h5>
+                                <div id="region-factor-impact" class="chart-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Regional Insights</h5>
+                                <div id="region-insights" class="insights-container">
+                                    <p class="text-muted">Select a region to view insights</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Crop Analysis Section -->
+        <section id="crop-analysis" class="mb-5 bg-light py-5">
+            <div class="container">
+                <h2 class="mb-4">Crop Analysis</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Select Crop</h5>
+                                <select id="crop-select" class="form-select mb-3">
+                                    <option value="">Loading crops...</option>
+                                </select>
+                                <h5 class="card-title">Select Region (Optional)</h5>
+                                <select id="crop-region-select" class="form-select mb-3">
+                                    <option value="">All Regions</option>
+                                </select>
+                                <button id="analyze-crop-btn" class="btn btn-success w-100">Analyze Crop</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Crop Yield by Region</h5>
+                                <div id="crop-yield-by-region" class="chart-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Factor Impact Analysis</h5>
+                                <div id="crop-factor-impact" class="chart-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Crop Insights</h5>
+                                <div id="crop-insights" class="insights-container">
+                                    <p class="text-muted">Select a crop to view insights</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Yield Prediction Section -->
+        <section id="yield-prediction" class="mb-5">
+            <div class="container">
+                <h2 class="mb-4">Yield Prediction</h2>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Predict Crop Yield</h5>
+                                <form id="prediction-form">
+                                    <div class="mb-3">
+                                        <label for="pred-region-select" class="form-label">Region</label>
+                                        <select id="pred-region-select" class="form-select" required>
+                                            <option value="">Select Region</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="pred-crop-select" class="form-label">Crop</label>
+                                        <select id="pred-crop-select" class="form-select" required>
+                                            <option value="">Select Crop</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="rainfall-input" class="form-label">Rainfall (mm)</label>
+                                        <input type="number" class="form-control" id="rainfall-input" min="0" step="0.1" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="irrigation-input" class="form-label">Irrigation (%)</label>
+                                        <input type="number" class="form-control" id="irrigation-input" min="0" max="100" step="0.1" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="fertilizer-input" class="form-label">Fertilizer Use (kg/ha)</label>
+                                        <input type="number" class="form-control" id="fertilizer-input" min="0" step="0.1" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-success w-100">Predict Yield</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Prediction Result</h5>
+                                <div id="prediction-result" class="prediction-container text-center">
+                                    <p class="text-muted">Fill the form to get yield prediction</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Improvement Strategies Section -->
+        <section id="improvement-strategies" class="mb-5 bg-light py-5">
+            <div class="container">
+                <h2 class="mb-4">Improvement Strategies</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Get Improvement Strategies</h5>
+                                <div class="mb-3">
+                                    <label for="strategy-region-select" class="form-label">Region</label>
+                                    <select id="strategy-region-select" class="form-select">
+                                        <option value="">Select Region</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="strategy-crop-select" class="form-label">Crop</label>
+                                    <select id="strategy-crop-select" class="form-select">
+                                        <option value="">Select Crop</option>
+                                    </select>
+                                </div>
+                                <button id="get-strategies-btn" class="btn btn-success w-100">Get Strategies</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Recommended Strategies</h5>
+                                <div id="strategies-container" class="strategies-container">
+                                    <p class="text-muted">Select a region and crop to view improvement strategies</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Indian Agricultural Yield Analysis</h5>
+                    <p>A data-driven approach to understand crop yield variability across Indian agro-climatic zones.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#regional-analysis" class="text-white">Regional Analysis</a></li>
+                        <li><a href="#crop-analysis" class="text-white">Crop Analysis</a></li>
+                        <li><a href="#yield-prediction" class="text-white">Yield Prediction</a></li>
+                        <li><a href="#improvement-strategies" class="text-white">Improvement Strategies</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Resources</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="https://agricoop.nic.in/" class="text-white" target="_blank">Ministry of Agriculture</a></li>
+                        <li><a href="https://icar.org.in/" class="text-white" target="_blank">ICAR</a></li>
+                        <li><a href="https://www.isapindia.org/" class="text-white" target="_blank">ISAP</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 Indian Agricultural Yield Analysis. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', path='js/main.js') }}"></script>
+</body>
+</html> 
